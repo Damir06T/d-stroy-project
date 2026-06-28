@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Корзина" %} | D-Stroy{% endblock %}
+
+{% block content %}
+<style>
+    .cart-header { font-weight: 800; font-size: 2rem; margin-bottom: 30px; text-transform: uppercase; color: #fd7e14;}
+    .cart-item { background-color: var(--bs-tertiary-bg); border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--bs-border-color); }
+    .item-img { width: 100px; height: 100px; object-fit: contain; background-color: white; border-radius: 8px; padding: 5px; }
+    .item-title { font-weight: 700; font-size: 1.1rem; text-decoration: none; color: var(--bs-body-color); display: block; }
+    
+    .quantity-control { display: flex; align-items: center; background-color: var(--bs-body-bg); border-radius: 8px; border: 1px solid var(--bs-border-color); width: fit-content; }
+    .qty-btn { border: none; background: none; padding: 5px 12px; color: var(--bs-body-color); font-size: 1.2rem; cursor: pointer; text-decoration: none; }
+    .qty-btn:hover { color: #fd7e14; }
+    .qty-value { padding: 0 10px; font-weight: 600; min-width: 30px; text-align: center; }
+
+    .summary-card { background-color: var(--bs-body-bg); border-radius: 15px; padding: 25px; border: 2px solid #fd7e14; position: sticky; top: 100px; }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 1.1rem; }
+    .total-price { font-size: 2rem; font-weight: 800; color: #fd7e14; }
+    
+    .btn-checkout { width: 100%; padding: 15px; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; border-radius: 10px; margin-top: 20px; background-color: #fd7e14; border-color: #fd7e14; color: white;}
+    .btn-checkout:hover { background-color: #e86e0c; }
+</style>
+
+<div class="container py-5 cart-container">
+    {% if items %}
+    <h1 class="cart-header"><i class="bi bi-cart3 me-3"></i>{% trans "Ваши стройматериалы" %}</h1>
+
+    <div class="row">
+        <div class="col-lg-8">
+            {% for item in items %}
+            <!-- Сохраняем вес и цену в атрибутах для JS-расчета -->
+            <div class="cart-item js-cart-item" data-weight="{{ item.product.weight|default:'0' }}" data-qty="{{ item.quantity }}">
+                <div class="row align-items-center">
+                    <div class="col-3 col-sm-2 text-center">
+                        {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="item-img shadow-sm">
+                        {% else %}
+                            <div class="item-img d-flex align-items-center justify-content-center text-muted border"><i class="bi bi-image"></i></div>
+                        {% endif %}
+                    </div>
+                    <div class="col-9 col-sm-5">
+                        <a href="{{ item.product.get_absolute_url }}" class="item-title">{{ item.product.name }}</a>
+                        <div class="text-muted small">Вес: {{ item.product.weight }} кг / упак</div>
+                        <div class="text-muted small">{{ item.product.price }} ₸ / шт.</div>
+                    </div>
+                    <div class="col-6 col-sm-3 mt-3 mt-sm-0 d-flex justify-content-center">
+                        <div class="quantity-control">
+                            <a href="{% url 'store:cart_remove' item.product.id %}" class="qty-btn">-</a>
+                            <span class="qty-value">{{ item.quantity }}</span>
+                            <a href="{% url 'store:cart_add' item.product.id %}" class="qty-btn">+</a>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-2 mt-3 mt-sm-0 text-end">
+                        <div class="fw-bold fs-5">{{ item.get_total_price }} ₸</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <a href="{% url 'store:catalog' %}" class="btn btn-outline-secondary mt-3"><i class="bi bi-arrow-left"></i> {% trans "Продолжить покупки" %}</a>
+        </div>
+
+        <div class="col-lg-4 mt-4 mt-lg-0">
+            <div class="summary-card shadow-sm">
+                <h4 class="fw-bold mb-4 text-uppercase">{% trans "Сумма заказа" %}</h4>
+                
+                <div class="summary-row border-bottom pb-2">
+                    <span class="text-muted">Материалы ({{ total_items }} шт):</span>
+                    <span class="fw-bold" id="materials-price" data-raw-price="{{ total_price|floatformat:'0' }}">{{ total_price }} ₸</span>
+                </div>
+                
+                <div class="summary-row border-bottom pb-2 pt-2">
+                    <span class="text-muted">Общий вес:</span>
+                    <span class="fw-bold" id="total-weight-display">0 кг</span>
+                </div>
+
+                <div class="summary-row pt-2">
+                    <span class="text-muted">Доставка спецтехникой:</span>
+                    <span class="fw-bold text-danger" id="delivery-price">0 ₸</span>
+                </div>
+                <div class="small text-muted mb-3" id="delivery-info"></div>
+                
+                <hr>
+                <div class="summary-row align-items-center">
+                    <span class="fs-5 fw-bold">Итого к оплате:</span>
+                    <span class="total-price" id="final-total">0 ₸</span>
+                </div>
+
+                <button type="button" class="btn btn-checkout shadow" data-bs-toggle="modal" data-bs-target="#checkoutSuccessModal">
+                    Оформить заказ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="text-center py-5">
+        <div class="mb-4"><i class="bi bi-bricks text-muted" style="font-size: 5rem; opacity: 0.5;"></i></div>
+        <h2 class="fw-bold mb-3">{% trans "Ваша корзина пуста" %}</h2>
+        <a href="{% url 'store:catalog' %}" class="btn btn-lg px-5 rounded-pill shadow mt-3" style="background-color: #fd7e14; color: white;">
+            {% trans "Перейти в каталог" %}
+        </a>
+    </div>
+    {% endif %}
+
+    <!-- Модалка успешного заказа -->
+    <div class="modal fade" id="checkoutSuccessModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-4">
+                <div class="modal-header border-0"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body">
+                    <div class="mb-4 text-success"><i class="bi bi-check-circle-fill" style="font-size: 4rem;"></i></div>
+                    <h2 class="fw-bold mb-3">Заказ оформлен!</h2>
+                    <p class="text-muted fs-5">Мы подготовим ваши стройматериалы и транспорт.</p>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <a href="{% url 'home' %}" class="btn px-5 rounded-pill" style="background-color: #fd7e14; color: white;">На главную</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Скрипт автоматического расчета доставки по весу (Как описано в ТЗ) -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. Собираем элементы корзины
+        const cartItems = document.querySelectorAll('.js-cart-item');
+        let totalWeight = 0;
+        
+        // 2. Считаем суммарный вес
+        cartItems.forEach(item => {
+            const weight = parseFloat(item.getAttribute('data-weight').replace(',', '.')) || 0;
+            const qty = parseInt(item.getAttribute('data-qty')) || 1;
+            totalWeight += (weight * qty);
+        });
+
+        // 3. Логика доставки D-Stroy
+        let deliveryCost = 2000;
+        let deliveryText = "Стандартная (до 1500 кг)";
+        
+        if (totalWeight > 1500) {
+            deliveryCost = 5000;
+            deliveryText = "Грузовой транспорт (более 1.5 т)";
+        } else if (totalWeight === 0) {
+            deliveryCost = 0; // Если вес не указан у товаров
+            deliveryText = "Уточняется менеджером";
+        }
+
+        // 4. Получаем базовую стоимость материалов из Django
+        const materialsPriceStr = document.getElementById('materials-price').getAttribute('data-raw-price');
+        const materialsPrice = parseInt(materialsPriceStr.replace(/\D/g, '')) || 0;
+
+        // 5. Итоговый расчет
+        const finalTotal = materialsPrice + deliveryCost;
+
+        // 6. Выводим на экран
+        document.getElementById('total-weight-display').innerText = totalWeight.toFixed(2) + ' кг';
+        document.getElementById('delivery-price').innerText = deliveryCost + ' ₸';
+        document.getElementById('delivery-info').innerText = '(' + deliveryText + ')';
+        document.getElementById('final-total').innerText = finalTotal.toLocaleString('ru-RU') + ' ₸';
+    });
+</script>
+{% endblock %}

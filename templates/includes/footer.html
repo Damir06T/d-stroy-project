@@ -1,0 +1,29 @@
+{% load i18n %}
+<footer class="footer mt-auto py-3 bg-body-tertiary">
+    <div class="container text-center text-muted d-flex justify-content-between align-items-center">
+        <span>&copy; 2026 D-Stroy. {% translate "Продвинутый Django проект." %}</span> 
+        
+        <form action="{% url 'set_language' %}" method="post" class="d-inline-flex">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.path }}">
+            
+            <select name="language" id="language-switcher" class="form-select form-select-sm" onchange="this.form.submit()">
+                
+                {% get_current_language as CURRENT_LANGUAGE %} 
+
+                <option value="ru" {% if 'ru' == CURRENT_LANGUAGE %}selected{% endif %}>
+                    {% translate "Русский" %} (RU)
+                </option>
+                
+                <option value="en" {% if 'en' == CURRENT_LANGUAGE %}selected{% endif %}>
+                    {% translate "English" %} (EN)
+                </option>
+
+                <option value="kk" {% if 'kk' == CURRENT_LANGUAGE %}selected{% endif %}>
+                    {% translate "Қазақша" %} (KK)
+                </option>
+                
+            </select>
+        </form>
+    </div>
+</footer>

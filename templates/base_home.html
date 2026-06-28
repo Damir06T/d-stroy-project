@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}D-Stroy | Строительные материалы{% endblock title %}
+
+{% block content %}
+<style>
+    /* Фирменный морковный цвет D-Stroy */
+    :root {
+        --carrot-color: #fd7e14;
+        --carrot-hover: #e86e0c;
+    }
+
+    /* Применяем морковный цвет к важным элементам */
+    .text-carrot { color: var(--carrot-color) !important; }
+    .bg-carrot { background-color: var(--carrot-color) !important; }
+    .btn-carrot {
+        background-color: var(--carrot-color);
+        border-color: var(--carrot-color);
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        border-radius: 25px;
+        padding: 10px 25px;
+    }
+    .btn-carrot:hover {
+        background-color: var(--carrot-hover);
+        border-color: var(--carrot-hover);
+        color: white;
+    }
+
+    /* Стилизация карточек преимуществ */
+    .feature-card {
+        border-radius: 12px;
+        transition: transform 0.3s ease;
+        border: 1px solid rgba(253, 126, 20, 0.2);
+        background-color: var(--bs-tertiary-bg);
+    }
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(253, 126, 20, 0.15);
+    }
+    .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+
+    /* Слайдер */
+    .carousel-item {
+        height: 500px;
+        background-color: #111;
+    }
+    .carousel-item img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        opacity: 0.6; 
+    }
+    .carousel-caption {
+        bottom: 30%;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    }
+    
+    /* Адаптация слайдера под телефоны */
+    @media (max-width: 768px) {
+        .carousel-item { height: 350px; }
+        .carousel-caption h1 { font-size: 2rem; }
+        .carousel-caption p { font-size: 1rem; }
+    }
+</style>
+
+<div id="heroCarousel" class="carousel slide mb-5 shadow-lg rounded overflow-hidden" data-bs-ride="carousel" data-bs-interval="4000">
+    <div class="carousel-inner">
+        
+        <div class="carousel-item active">
+            <img src="https://images.unsplash.com/photo-1523413363574-c30aa1c2a516?auto=format&fit=crop&w=1600&q=80" class="d-block w-100" alt="Кафель">
+            <div class="carousel-caption d-none d-md-block">
+                <h1 class="display-4 fw-bold text-white">КЕРАМИЧЕСКАЯ ПЛИТКА</h1>
+                <p class="fs-4 text-light">Широкий ассортимент для ванной и кухни. Точный расчет!</p>
+                <a href="{% url 'store:catalog' %}" class="btn btn-carrot mt-3">Выбрать кафель</a>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1600&q=80" class="d-block w-100" alt="Брусчатка">
+            <div class="carousel-caption d-none d-md-block">
+                <h1 class="display-4 fw-bold text-white">БРУСЧАТКА ДЛЯ ДВОРА</h1>
+                <p class="fs-4 text-light">Скидки до -20% на оптовые заказы свыше 1.5 тонн.</p>
+                <a href="{% url 'store:catalog' %}" class="btn btn-carrot mt-3">Смотреть каталог</a>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=80" class="d-block w-100" alt="Фасады">
+            <div class="carousel-caption d-none d-md-block">
+                <h1 class="display-4 fw-bold text-carrot">ПОЛИФАСАДЫ</h1>
+                <p class="fs-4 text-light">Утепли и укрась свой дом в один клик.</p>
+                <a href="{% url 'store:catalog' %}" class="btn btn-carrot mt-3">Купить выгодно</a>
+            </div>
+        </div>
+
+    </div>
+    
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Предыдущий</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Следующий</span>
+    </button>
+</div>
+
+<div class="row g-4 mb-5 text-center">
+    
+    <div class="col-md-4">
+        <div class="card h-100 feature-card shadow-sm">
+            <div class="card-body p-4">
+                <i class="bi bi-truck feature-icon text-carrot"></i>
+                <h4 class="fw-bold mt-2">Доставка спецтехникой</h4>
+                <p class="text-muted">Быстрая доставка манипуляторами и Газелями по Атырау. Бесплатно при заказе от 150 000 ₸.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 feature-card shadow-sm">
+            <div class="card-body p-4">
+                <i class="bi bi-shield-check feature-icon text-carrot"></i>
+                <h4 class="fw-bold mt-2">100% Гарантия</h4>
+                <p class="text-muted">Мы поставляем только сертифицированные строительные материалы напрямую с заводов.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 feature-card shadow-sm">
+            <div class="card-body p-4">
+                <i class="bi bi-calculator-fill feature-icon text-carrot"></i>
+                <h4 class="fw-bold mt-2">Умный расчет</h4>
+                <p class="text-muted">Не знаете сколько нужно плитки? Наш встроенный калькулятор сам рассчитает количество упаковок.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

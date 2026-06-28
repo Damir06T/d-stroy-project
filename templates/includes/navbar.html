@@ -1,0 +1,160 @@
+{% load static %}
+{% load i18n %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,800&display=swap');
+
+    .navbar-custom {
+        background-color: var(--bs-tertiary-bg) !important; 
+        padding: 15px 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        font-family: 'Montserrat', sans-serif;
+        border-bottom: 1px solid var(--bs-border-color);
+        transition: background-color 0.3s ease;
+    }
+
+    .navbar-brand {
+        font-weight: 900;
+        font-style: italic;
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        color: var(--bs-body-color) !important;
+        text-transform: uppercase;
+    }
+    .navbar-brand span { color: #fd7e14; }
+
+    .nav-link {
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        color: var(--bs-secondary-color) !important; 
+        margin: 0 10px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .nav-link:hover, .nav-link.active { color: #fd7e14 !important; }
+
+    .logout-btn {
+        background: transparent; border: none; color: var(--bs-secondary-color) !important;
+        font-weight: 700; text-transform: uppercase; font-size: 0.85rem; transition: 0.3s;
+        padding: 0; display: flex; align-items: center;
+    }
+    .logout-btn:hover { color: #dc3545 !important; }
+
+    .btn-cart { border-radius: 20px; padding: 8px 18px !important; border: 1px solid var(--bs-border-color); }
+    .btn-cart:hover { border-color: #fd7e14; }
+
+    .auth-btn {
+        border-radius: 25px; padding: 8px 25px; font-weight: 700; text-transform: uppercase;
+        font-size: 0.8rem; background-color: #fd7e14 !important; border-color: #fd7e14 !important; color: white !important;
+    }
+
+    #theme-toggle-btn {
+        background: none; border: none; color: var(--bs-body-color);
+        font-size: 1.4rem; transition: 0.3s; padding: 0; margin-right: 15px;
+    }
+    #theme-toggle-btn:hover { color: #fd7e14; transform: scale(1.1); }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+        <!-- Логотип -->
+        <a class="navbar-brand" href="{% url 'home' %}">
+            D-<span>STROY</span>
+        </a>
+        
+        <!-- Кнопка-гамбургер для мобилок -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0 mt-3 mt-lg-0 text-center">
+                <li class="nav-item">
+                    <a class="nav-link justify-content-center" href="{% url 'home' %}">
+                        <i class="bi bi-house-door-fill"></i> Главная
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link justify-content-center" href="{% url 'store:catalog' %}">
+                        <i class="bi bi-bricks"></i> Каталог
+                    </a>
+                </li>
+                
+                {% if user.is_authenticated %}
+                <li class="nav-item mt-2 mt-lg-0">
+                    <a class="nav-link btn-cart justify-content-center mx-auto" style="width: fit-content;" href="{% url 'store:cart_detail' %}">
+                        <i class="bi bi-cart-fill"></i> Корзина
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+
+            <ul class="navbar-nav align-items-center mt-3 mt-lg-0 justify-content-center">
+                <!-- КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ -->
+                <li class="nav-item d-flex align-items-center mb-3 mb-lg-0">
+                    <button id="theme-toggle-btn" title="Сменить тему">
+                        <i class="bi bi-moon-stars-fill" id="theme-icon"></i>
+                    </button>
+                </li>
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item mb-2 mb-lg-0">
+                        <a class="nav-link" href="{% url 'profile' %}">
+                            <i class="bi bi-person-circle fs-5 me-1"></i> {{ user.username }}
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block mx-2 text-secondary">|</li>
+                    <li class="nav-item">
+                        <form action="{% url 'logout' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn">
+                                Выход <i class="bi bi-box-arrow-right ms-2"></i>
+                            </button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item mb-2 mb-lg-0">
+                        <a class="nav-link" href="{% url 'login' %}">Вход</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn auth-btn w-100" href="{% url 'register' %}">Регистрация</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ГЛОБАЛЬНЫЙ СКРИПТ СМЕНЫ ТЕМЫ -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const themeBtn = document.getElementById('theme-toggle-btn');
+        const themeIcon = document.getElementById('theme-icon');
+        const htmlElement = document.documentElement; // Берем тег <html> для смены цветов
+
+        let currentTheme = localStorage.getItem('dstroy_theme') || 'dark';
+        
+        function applyTheme(theme) {
+            htmlElement.setAttribute('data-bs-theme', theme);
+            if (theme === 'light') {
+                themeIcon.className = 'bi bi-moon-stars-fill';
+                themeIcon.style.color = '#333';
+            } else {
+                themeIcon.className = 'bi bi-sun-fill';
+                themeIcon.style.color = '#fd7e14';
+            }
+        }
+
+        applyTheme(currentTheme);
+
+        themeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            currentTheme = htmlElement.getAttribute('data-bs-theme') === 'light' ? 'dark' : 'light';
+            applyTheme(currentTheme);
+            localStorage.setItem('dstroy_theme', currentTheme);
+        });
+    });
+</script>

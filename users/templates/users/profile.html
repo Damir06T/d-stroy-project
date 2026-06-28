@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Личный кабинет" %} | D-Stroy{% endblock %}
+
+{% block content %}
+<style>
+    .profile-container { max-width: 1100px; margin: 0 auto; }
+
+    /* Основная карточка */
+    .dashboard-card {
+        background-color: var(--bs-tertiary-bg);
+        border-radius: 20px;
+        border: 1px solid var(--bs-border-color);
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    /* Аватар */
+    .user-avatar-circle {
+        width: 90px; height: 90px;
+        background-color: var(--bs-secondary-bg);
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 2.5rem; color: var(--bs-body-color);
+        background-size: cover; background-position: center;
+        border: 3px solid #fd7e14; /* Оранжевая рамка */
+        flex-shrink: 0;
+    }
+
+    /* КАРТА БОНУСОВ D-STROY */
+    .bonus-banner {
+        background: linear-gradient(90deg, #fd7e14 0%, #ff9e43 100%);
+        color: #fff;
+        border-radius: 15px;
+        padding: 15px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 5px 15px rgba(253, 126, 20, 0.3);
+        height: 100%;
+    }
+    .bonus-amount { font-size: 1.8rem; font-weight: 800; line-height: 1; }
+    .bonus-label { font-size: 0.8rem; text-transform: uppercase; font-weight: 700; opacity: 0.9; }
+
+    /* Плитки меню */
+    .menu-tile {
+        background-color: var(--bs-body-bg);
+        border-radius: 16px;
+        padding: 20px;
+        height: 100%;
+        border: 1px solid var(--bs-border-color);
+        transition: all 0.2s;
+        text-decoration: none;
+        color: var(--bs-body-color);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 140px;
+    }
+    
+    .menu-tile:hover {
+        transform: translateY(-5px);
+        border-color: #fd7e14;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .tile-icon { font-size: 2rem; margin-bottom: 15px; color: #fd7e14; }
+    .tile-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 5px; }
+    .tile-desc { font-size: 0.85rem; color: var(--bs-secondary-color); }
+
+    .menu-tile.logout-tile:hover { border-color: #dc3545; }
+    .menu-tile.logout-tile .tile-icon { color: #dc3545; }
+
+    /* Фото профиля модалка */
+    .avatar-upload-container { position: relative; width: 100px; height: 100px; margin: 0 auto 20px; }
+    .avatar-preview { width: 100%; height: 100%; border-radius: 50%; background-color: var(--bs-secondary-bg); background-size: cover; background-position: center; border: 3px solid #fd7e14; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--bs-body-color); cursor: pointer; }
+    .upload-icon-btn { position: absolute; bottom: 0; right: 0; background-color: #fd7e14; color: white; border: 3px solid var(--bs-body-bg); border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    
+    .btn-carrot { background-color: #fd7e14; border-color: #fd7e14; color: white; }
+    .btn-carrot:hover { background-color: #e86e0c; border-color: #e86e0c; color: white; }
+</style>
+
+<div class="container py-4 profile-container">
+    
+    <div class="dashboard-card">
+        <div class="row align-items-center g-4">
+            
+            <div class="col-md-7 d-flex align-items-center">
+                <div class="user-avatar-circle me-4" 
+                     style="{% if user_profile.avatar %}background-image: url('{{ user_profile.avatar.url }}');{% endif %}">
+                    {% if not user_profile.avatar %}<i class="bi bi-person-fill"></i>{% endif %}
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-1">{{ user.first_name }} {{ user.last_name }}</h3>
+                    <p class="text-muted mb-2">{{ user.email }}</p>
+                    <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        <i class="bi bi-pencil-fill me-1"></i> {% trans "Редактировать профиль" %}
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="bonus-banner">
+                    <div>
+                        <div class="bonus-amount">0 ₸</div>
+                        <div class="bonus-label">{% trans "Ваши бонусы" %}</div>
+                    </div>
+                    <i class="bi bi-wallet2 fs-1 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h5 class="fw-bold mb-3 ps-2">{% trans "Мои разделы" %}</h5>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        
+        <div class="col">
+            <a href="{% url 'store:cart_detail' %}" class="menu-tile">
+                <i class="bi bi-bricks tile-icon"></i>
+                <div>
+                    <div class="tile-title">{% trans "Корзина" %}</div>
+                    <div class="tile-desc">{{ request.session.visit_count|default:0 }} {% trans "материалов" %}</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="#" class="menu-tile">
+                <i class="bi bi-truck tile-icon"></i>
+                <div>
+                    <div class="tile-title">{% trans "Логистика" %}</div>
+                    <div class="tile-desc">{% trans "Нет активных доставок" %}</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="#" class="menu-tile">
+                <i class="bi bi-heart-fill tile-icon text-danger"></i>
+                <div>
+                    <div class="tile-title">{% trans "Избранное" %}</div>
+                    <div class="tile-desc">{% trans "Список пуст" %}</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <div class="menu-tile" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                <i class="bi bi-gear-fill tile-icon text-secondary"></i>
+                <div>
+                    <div class="tile-title">{% trans "Настройки сайта" %}</div>
+                    <div class="tile-desc">{% trans "Тема и язык" %}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="menu-tile">
+                <i class="bi bi-shield-lock-fill tile-icon text-warning"></i>
+                <div>
+                    <div class="tile-title">{% trans "Безопасность" %}</div>
+                    <div class="tile-desc">{% trans "Активная сессия" %}:</div>
+                    {% if history %}
+                        <small class="text-muted">{% trans "Вход" %}: {{ history.0.timestamp|date:"d.m H:i" }}</small>
+                    {% else %}
+                        <div class="tile-desc">{% trans "Нет данных" %}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="menu-tile logout-tile" style="cursor: pointer;" onclick="document.getElementById('logout-form').submit();">
+                <i class="bi bi-box-arrow-right tile-icon"></i>
+                <div>
+                    <div class="tile-title text-danger">{% trans "Выйти" %}</div>
+                    <div class="tile-desc">{% trans "Завершить сеанс" %}</div>
+                </div>
+            </div>
+            <form id="logout-form" action="{% url 'logout' %}" method="post" class="d-none">{% csrf_token %}</form>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">{% trans "Редактирование профиля" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="text-center my-4">
+                        <div class="avatar-upload-container">
+                            {{ profile_form.avatar }}
+                            <label for="id_avatar" class="avatar-preview" style="{% if user_profile.avatar %}background-image: url('{{ user_profile.avatar.url }}');{% endif %}">
+                                {% if not user_profile.avatar %}<i class="bi bi-person"></i>{% endif %}
+                                <div class="upload-icon-btn"><i class="bi bi-camera-fill"></i></div>
+                            </label>
+                        </div>
+                        <small class="text-muted">{% trans "Нажмите на фото" %}</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-6"><label class="form-label small text-muted">{% trans "Имя" %}</label>{{ user_form.first_name }}</div>
+                        <div class="col-6"><label class="form-label small text-muted">{% trans "Фамилия" %}</label>{{ user_form.last_name }}</div>
+                        <div class="col-12"><label class="form-label small text-muted">Email</label>{{ user_form.email }}</div>
+                        <div class="d-none">{{ profile_form.theme }}{{ profile_form.language }}</div>
+                    </div>
+                    <button type="submit" name="update_user_info" class="btn btn-carrot w-100 py-2 fw-bold mt-3">{% trans "Сохранить" %}</button>
+                </form>
+                <div class="text-center mt-3 pt-3 border-top">
+                    <a href="{% url 'password_change' %}" class="text-decoration-none small" style="color: #fd7e14;"><i class="bi bi-key me-1"></i> {% trans "Сменить пароль" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans "Настройки сайта" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3"><label class="form-label">{% trans "Цветовая тема" %}</label>{{ profile_form.theme }}</div>
+                    <div class="mb-3"><label class="form-label">{% trans "Язык интерфейса" %}</label>{{ profile_form.language }}</div>
+                    <div class="d-none">{{ profile_form.avatar }}</div>
+                    <button type="submit" name="update_settings" class="btn btn-carrot w-100">{% trans "Применить" %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const avatarInput = document.getElementById('id_avatar');
+        if(avatarInput) {
+            avatarInput.style.display = 'none';
+            avatarInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.querySelector('.avatar-preview');
+                        preview.style.backgroundImage = `url('${e.target.result}')`;
+                        const icon = preview.querySelector('.bi-person');
+                        if(icon) icon.style.display = 'none';
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,478 @@
+# Kazakh translations for D-Stroy project.
+msgid ""
+msgstr ""
+"Project-Id-Version: D-Stroy Project\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-09 13:00+0500\n"
+"PO-Revision-Date: 2025-12-09 13:40+0500\n"
+"Last-Translator: \n"
+"Language-Team: Kazakh\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\D-Stroy\settings.py:92 .\templates\includes\footer.html:15
+msgid "Русский"
+msgstr "Орысша"
+
+#: .\D-Stroy\settings.py:93 .\templates\includes\footer.html:19
+msgid "English"
+msgstr "Ағылшынша"
+
+#: .\D-Stroy\settings.py:94 .\templates\includes\footer.html:23
+msgid "Қазақша"
+msgstr "Қазақша"
+
+#: .\templates\includes\footer.html:4
+msgid "Продвинутый Django проект."
+msgstr "Күрделі Django жобасы."
+
+#: .\store\templates\store\cart_detail.html:5
+#: .\templates\includes\navbar.html:117
+#: .\users\templates\users\profile.html:121
+msgid "Корзина"
+msgstr "Себет"
+
+#: .\store\templates\store\cart_detail.html:119
+msgid "Ваша корзина"
+msgstr "Сіздің себетіңіз"
+
+#: .\store\templates\store\cart_detail.html:157
+msgid "Продолжить покупки"
+msgstr "Сауданы жалғастыру"
+
+#: .\store\templates\store\cart_detail.html:163
+msgid "Сумма заказа"
+msgstr "Тапсырыс сомасы"
+
+#: .\store\templates\store\cart_detail.html:166
+msgid "Товары"
+msgstr "Тауарлар"
+
+#: .\store\templates\store\cart_detail.html:171
+msgid "Доставка"
+msgstr "Жеткізу"
+
+#: .\store\templates\store\cart_detail.html:172
+msgid "Бесплатно"
+msgstr "Тегін"
+
+#: .\store\templates\store\cart_detail.html:178
+msgid "Итого"
+msgstr "Барлығы"
+
+#: .\store\templates\store\cart_detail.html:183
+msgid "Оформить заказ"
+msgstr "Тапсырысты рәсімдеу"
+
+#: .\store\templates\store\cart_detail.html:187
+msgid "Безопасная оплата"
+msgstr "Қауіпсіз төлем"
+
+#: .\store\templates\store\cart_detail.html:198
+msgid "Ваша корзина пуста"
+msgstr "Сіздің себетіңіз бос"
+
+#: .\store\templates\store\cart_detail.html:201
+msgid "Перейти в каталог"
+msgstr "Каталогқа өту"
+
+#: .\store\templates\store\cart_detail.html:216
+msgid "Спасибо за заказ!"
+msgstr "Тапсырысыңызға рахмет!"
+
+#: .\store\templates\store\cart_detail.html:226
+msgid "Отлично!"
+msgstr "Керемет!"
+
+#: .\store\templates\store\catalog.html:5
+#: .\store\templates\store\catalog.html:91
+#: .\store\templates\store\product_detail.html:94
+#: .\templates\includes\navbar.html:110
+msgid "Каталог"
+msgstr "Каталог"
+
+#: .\store\templates\store\catalog.html:97
+msgid "Поиск..."
+msgstr "Іздеу..."
+
+#: .\store\templates\store\catalog.html:106
+#: .\store\templates\store\catalog.html:112
+msgid "Дешевые"
+msgstr "Арзанынан бастап"
+
+#: .\store\templates\store\catalog.html:107
+#: .\store\templates\store\catalog.html:113
+msgid "Дорогие"
+msgstr "Қымбатынан бастап"
+
+#: .\store\templates\store\catalog.html:108
+#: .\store\templates\store\catalog.html:111
+msgid "Новинки"
+msgstr "Жаңалары"
+
+#: .\store\templates\store\catalog.html:121
+msgid "Все полки"
+msgstr "Барлық сөрелер"
+
+#: .\store\templates\store\catalog.html:136
+msgid "Смотреть все"
+msgstr "Барлығын көру"
+
+#: .\store\templates\store\catalog.html:154
+msgid "Все товары"
+msgstr "Барлық тауарлар"
+
+#: .\store\templates\store\catalog.html:197
+msgid "Ничего не найдено"
+msgstr "Ештеңе табылмады"
+
+#: .\store\templates\store\catalog.html:198
+msgid "Сбросить фильтры"
+msgstr "Сүзгілерді тазалау"
+
+#: .\store\templates\store\includes\product_card_mini.html:14
+#: .\store\templates\store\product_detail.html:190
+msgid "В корзину"
+msgstr "Себетке"
+
+#: .\store\templates\store\includes\product_card_mini.html:28
+#: .\store\templates\store\product_detail.html:195
+msgid "Детали"
+msgstr "Толығырақ"
+
+#: .\store\templates\store\product_detail.html:93 .\templates\base_home.html:3
+#: .\templates\includes\navbar.html:105
+msgid "Главная"
+msgstr "Басты бет"
+
+#: .\store\templates\store\product_detail.html:107
+msgid "Изображение отсутствует"
+msgstr "Сурет жоқ"
+
+#: .\store\templates\store\product_detail.html:127
+msgid "Описание"
+msgstr "Сипаттамасы"
+
+#: .\store\templates\store\product_detail.html:137
+msgid "Выберите размер"
+msgstr "Өлшемді таңдаңыз"
+
+#: .\store\templates\store\product_detail.html:154
+msgid "Добавить в корзину"
+msgstr "Себетке қосу"
+
+#: .\store\templates\store\product_detail.html:160
+msgid "Войдите"
+msgstr "Кіріңіз"
+
+#: .\store\templates\store\product_detail.html:160
+msgid "чтобы купить этот товар."
+msgstr "осы тауарды сатып алу үшін."
+
+#: .\store\templates\store\product_detail.html:167
+msgid "Быстрая доставка по Казахстану"
+msgstr "Қазақстан бойынша жылдам жеткізу"
+
+#: .\store\templates\store\product_detail.html:168
+#, python-format
+msgid "100%% Оригинальный товар"
+msgstr "100%% Түпнұсқа тауар"
+
+#: .\store\templates\store\product_detail.html:175
+msgid "Вы недавно смотрели"
+msgstr "Сіз жақында қарадыңыз"
+
+#: .\templates\base.html:7
+msgid "Главная | D-Stroy"
+msgstr "Басты бет | D-Stroy"
+
+#: .\templates\base.html:26
+msgid "Close"
+msgstr "Жабу"
+
+#: .\templates\base_home.html:93
+msgid "Новая коллекция 2025"
+msgstr "Жаңа топтама 2025"
+
+#: .\templates\base_home.html:94
+msgid "Создана для твоих новых рекордов."
+msgstr "Сіздің жаңа рекордтарыңыз үшін жасалған."
+
+#: .\templates\base_home.html:95
+msgid "Смотреть каталог"
+msgstr "Каталогты қарау"
+
+#: .\templates\base_home.html:103
+#, python-format
+msgid "СКИДКИ ДО -50%%"
+msgstr "-50%% ДЕЙІН ЖЕҢІЛДІКТЕР"
+
+#: .\templates\base_home.html:104
+msgid "На всю мужскую спортивную одежду."
+msgstr "Барлық ерлер спорттық киімдеріне."
+
+#: .\templates\base_home.html:105
+msgid "Купить выгодно"
+msgstr "Тиімді бағамен сатып алу"
+
+#: .\templates\base_home.html:112
+msgid "АКСЕССУАРЫ"
+msgstr "АКСЕССУАРЛАР"
+
+#: .\templates\base_home.html:113
+msgid "Всё необходимое для твоих тренировок."
+msgstr "Сіздің жаттығуларыңызға қажеттінің бәрі."
+
+#: .\templates\base_home.html:114
+msgid "Выбрать"
+msgstr "Таңдау"
+
+#: .\templates\base_home.html:133
+msgid "Быстрая доставка"
+msgstr "Жылдам жеткізу"
+
+#: .\templates\base_home.html:134
+msgid ""
+"Бесплатная доставка по Атырау при заказе от 15 000 ₸. Отправка по всему "
+"Казахстану."
+msgstr ""
+"Атырау бойынша 15 000 ₸ жоғары тапсырыстар тегін жеткізіледі. Қазақстан "
+"бойынша жөнелту."
+
+#: .\templates\base_home.html:142
+#, python-format
+msgid "100%% Оригинальный товар"
+msgstr "100%% Түпнұсқа тауар"
+
+#: .\templates\base_home.html:143
+msgid ""
+"Мы гарантируем оригинальность всех товаров Nike, Adidas и Puma. Гарантия "
+"возврата."
+msgstr ""
+"Біз Nike, Adidas және Puma тауарларының түпнұсқалығына кепілдік береміз. "
+"Қайтару кепілдігі."
+
+#: .\templates\base_home.html:151
+msgid "Онлайн-поддержка"
+msgstr "Онлайн қолдау"
+
+#: .\templates\base_home.html:152
+msgid ""
+"Наши менеджеры всегда на связи. Нажмите сюда или на иконку в углу, чтобы "
+"начать чат."
+msgstr ""
+"Біздің менеджерлер әрқашан байланыста. Чатты бастау үшін осында немесе "
+"бұрыштағы белгішеге басыңыз."
+
+#: .\templates\includes\navbar.html:138
+msgid "Выход"
+msgstr "Шығу"
+
+#: .\templates\includes\navbar.html:144
+#: .\users\templates\users\profile.html:164
+msgid "Вход"
+msgstr "Кіру"
+
+#: .\templates\includes\navbar.html:148
+msgid "Регистрация"
+msgstr "Тіркелу"
+
+#: .\templates\includes\session_info.html:5
+#, python-format
+msgid ""
+"\n"
+"            Вы заходили на сайт 1 раз.\n"
+"        "
+msgid_plural ""
+"\n"
+"            Вы заходили на сайт %(count)s раз.\n"
+"        "
+msgstr[0] "\n            Сіз сайтқа 1 рет кірдіңіз.\n        "
+msgstr[1] "\n            Сіз сайтқа %(count)s рет кірдіңіз.\n        "
+
+#: .\templates\includes\session_info.html:12
+msgid "Последняя страница"
+msgstr "Соңғы бет"
+
+#: .\templates\includes\session_info.html:16
+msgid "Текущий язык"
+msgstr "Ағымдағы тіл"
+
+#: .\users\templates\users\password_change_form.html:4
+#: .\users\templates\users\password_change_form.html:12
+msgid "Смена пароля"
+msgstr "Құпия сөзді ауыстыру"
+
+#: .\users\templates\users\password_change_form.html:31
+#: .\users\templates\users\profile.html:215
+msgid "Сменить пароль"
+msgstr "Құпия сөзді өзгерту"
+
+#: .\users\templates\users\password_change_form.html:32
+msgid "Отмена"
+msgstr "Болдырмау"
+
+#: .\users\templates\users\profile.html:5
+msgid "Личный кабинет"
+msgstr "Жеке кабинет"
+
+#: .\users\templates\users\profile.html:97
+msgid "Редактировать профиль"
+msgstr "Профильді өңдеу"
+
+#: .\users\templates\users\profile.html:106
+msgid "Ваши бонусы"
+msgstr "Сіздің бонустарыңыз"
+
+#: .\users\templates\users\profile.html:114
+msgid "Мои разделы"
+msgstr "Менің бөлімдерім"
+
+#: .\users\templates\users\profile.html:122
+msgid "товаров"
+msgstr "тауар"
+
+#: .\users\templates\users\profile.html:131
+msgid "Доставки"
+msgstr "Жеткізулер"
+
+#: .\users\templates\users\profile.html:132
+msgid "Нет активных заказов"
+msgstr "Белсенді тапсырыстар жоқ"
+
+#: .\users\templates\users\profile.html:141
+msgid "Избранное"
+msgstr "Таңдаулылар"
+
+#: .\users\templates\users\profile.html:142
+msgid "Список пуст"
+msgstr "Тізім бос"
+
+#: .\users\templates\users\profile.html:151
+#: .\users\templates\users\profile.html:226
+msgid "Настройки сайта"
+msgstr "Сайт баптаулары"
+
+#: .\users\templates\users\profile.html:152
+msgid "Тема и язык"
+msgstr "Тақырып және тіл"
+
+#: .\users\templates\users\profile.html:161
+msgid "Безопасность"
+msgstr "Қауіпсіздік"
+
+#: .\users\templates\users\profile.html:162
+msgid "Активная сессия"
+msgstr "Белсенді сессия"
+
+#: .\users\templates\users\profile.html:166
+msgid "Нет данных"
+msgstr "Деректер жоқ"
+
+#: .\users\templates\users\profile.html:176
+msgid "Выйти"
+msgstr "Шығу"
+
+#: .\users\templates\users\profile.html:177
+msgid "Завершить сеанс"
+msgstr "Сеансты аяқтау"
+
+#: .\users\templates\users\profile.html:190
+msgid "Редактирование профиля"
+msgstr "Профильді өңдеу"
+
+#: .\users\templates\users\profile.html:204
+msgid "Нажмите на фото"
+msgstr "Суретке басыңыз"
+
+#: .\users\templates\users\profile.html:207
+msgid "Имя"
+msgstr "Аты"
+
+#: .\users\templates\users\profile.html:208
+msgid "Фамилия"
+msgstr "Тегі"
+
+#: .\users\templates\users\profile.html:212
+msgid "Сохранить"
+msgstr "Сақтау"
+
+#: .\users\templates\users\profile.html:232
+msgid "Цветовая тема"
+msgstr "Түс тақырыбы"
+
+#: .\users\templates\users\profile.html:233
+msgid "Язык интерфейса"
+msgstr "Интерфейс тілі"
+
+#: .\users\templates\users\profile.html:235
+msgid "Применить"
+msgstr "Қолдану"
+
+#: .\users\views.py:33
+msgid "Аккаунт успешно создан! Теперь войдите."
+msgstr "Аккаунт сәтті құрылды! Енді кіріңіз."
+
+#: .\users\views.py:36
+msgid "Ошибка при регистрации. Проверьте введенные данные."
+msgstr "Тіркелу кезінде қате. Енгізілген деректерді тексеріңіз."
+
+#: .\users\views.py:60
+msgid "Код подтверждения для входа в D-Stroy"
+msgstr "D-Stroy-қа кіру үшін растау коды"
+
+#: .\users\views.py:71
+msgid ""
+"Код подтверждения отправлен на вашу почту. Введите его для завершения входа."
+msgstr "Растау коды поштаңызға жіберілді. Кіруді аяқтау үшін оны енгізіңіз."
+
+#: .\users\views.py:80
+msgid "Неверный логин или пароль."
+msgstr "Логин немесе құпия сөз қате."
+
+#: .\users\views.py:86
+msgid "Ошибка сессии. Войдите снова."
+msgstr "Сессия қатесі. Қайта кіріңіз."
+
+#: .\users\views.py:93
+msgid "Срок действия кода истек (2 минуты). Войдите снова."
+msgstr "Кодтың мерзімі өтті (2 минут). Қайта кіріңіз."
+
+#: .\users\views.py:129
+msgid "Вход успешен! Добро пожаловать."
+msgstr "Кіру сәтті! Қош келдіңіз."
+
+#: .\users\views.py:132
+msgid "Введен неверный код. Попробуйте снова."
+msgstr "Қате код енгізілді. Қайтадан байқап көріңіз."
+
+#: .\users\views.py:134
+msgid "Ошибка в форме. Код должен быть 6 цифр."
+msgstr "Формада қате бар. Код 6 цифрдан тұруы керек."
+
+#: .\users\views.py:161
+msgid "Основная информация успешно обновлена!"
+msgstr "Негізгі ақпарат сәтті жаңартылды!"
+
+#: .\users\views.py:164
+msgid "Ошибка при обновлении основной информации."
+msgstr "Негізгі ақпаратты жаңарту кезінде қате."
+
+#: .\users\views.py:182
+msgid "Настройки профиля успешно обновлены!"
+msgstr "Профиль баптаулары сәтті жаңартылды!"
+
+#: .\users\views.py:185
+msgid "Ошибка при обновлении настроек."
+msgstr "Баптауларды жаңарту кезінде қате."
+
+#: .\users\views.py:210
+msgid "Вы успешно вышли из системы. До свидания!"
+msgstr "Сіз жүйеден сәтті шықтыңыз. Сау болыңыз!"
+
+#: .\users\views.py:229
+msgid "Язык сохранен в вашем профиле."
+msgstr "Тіл сіздің профиліңізде сақталды."

@@ -1,0 +1,479 @@
+# English translations for D-Stroy project.
+msgid ""
+msgstr ""
+"Project-Id-Version: D-Stroy Project\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-09 12:00+0500\n"
+"PO-Revision-Date: 2025-12-09 13:45+0500\n"
+"Last-Translator: \n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\D-Stroy\settings.py:92 .\templates\includes\footer.html:15
+msgid "Русский"
+msgstr "Russian"
+
+#: .\D-Stroy\settings.py:93 .\templates\includes\footer.html:19
+msgid "English"
+msgstr "English"
+
+#: .\D-Stroy\settings.py:94 .\templates\includes\footer.html:23
+msgid "Қазақша"
+msgstr "Kazakh"
+
+#: .\templates\includes\footer.html:4
+msgid "Продвинутый Django проект."
+msgstr "Advanced Django project."
+
+#: .\store\templates\store\cart_detail.html:5
+#: .\templates\includes\navbar.html:117
+#: .\users\templates\users\profile.html:121
+msgid "Корзина"
+msgstr "Cart"
+
+#: .\store\templates\store\cart_detail.html:119
+msgid "Ваша корзина"
+msgstr "Your cart"
+
+#: .\store\templates\store\cart_detail.html:157
+msgid "Продолжить покупки"
+msgstr "Continue shopping"
+
+#: .\store\templates\store\cart_detail.html:163
+msgid "Сумма заказа"
+msgstr "Order total"
+
+#: .\store\templates\store\cart_detail.html:166
+msgid "Товары"
+msgstr "Products"
+
+#: .\store\templates\store\cart_detail.html:171
+msgid "Доставка"
+msgstr "Delivery"
+
+#: .\store\templates\store\cart_detail.html:172
+msgid "Бесплатно"
+msgstr "Free"
+
+#: .\store\templates\store\cart_detail.html:178
+msgid "Итого"
+msgstr "Total"
+
+#: .\store\templates\store\cart_detail.html:183
+msgid "Оформить заказ"
+msgstr "Checkout"
+
+#: .\store\templates\store\cart_detail.html:187
+msgid "Безопасная оплата"
+msgstr "Secure payment"
+
+#: .\store\templates\store\cart_detail.html:198
+msgid "Ваша корзина пуста"
+msgstr "Your cart is empty"
+
+#: .\store\templates\store\cart_detail.html:201
+msgid "Перейти в каталог"
+msgstr "Go to catalog"
+
+#: .\store\templates\store\cart_detail.html:216
+msgid "Спасибо за заказ!"
+msgstr "Thank you for your order!"
+
+#: .\store\templates\store\cart_detail.html:226
+msgid "Отлично!"
+msgstr "Great!"
+
+#: .\store\templates\store\catalog.html:5
+#: .\store\templates\store\catalog.html:91
+#: .\store\templates\store\product_detail.html:94
+#: .\templates\includes\navbar.html:110
+msgid "Каталог"
+msgstr "Catalog"
+
+#: .\store\templates\store\catalog.html:97
+msgid "Поиск..."
+msgstr "Search..."
+
+#: .\store\templates\store\catalog.html:106
+#: .\store\templates\store\catalog.html:112
+msgid "Дешевые"
+msgstr "Cheapest"
+
+#: .\store\templates\store\catalog.html:107
+#: .\store\templates\store\catalog.html:113
+msgid "Дорогие"
+msgstr "Most Expensive"
+
+#: .\store\templates\store\catalog.html:108
+#: .\store\templates\store\catalog.html:111
+msgid "Новинки"
+msgstr "New Arrivals"
+
+#: .\store\templates\store\catalog.html:121
+msgid "Все полки"
+msgstr "All Shelves"
+
+#: .\store\templates\store\catalog.html:136
+msgid "Смотреть все"
+msgstr "View All"
+
+#: .\store\templates\store\catalog.html:154
+msgid "Все товары"
+msgstr "All Products"
+
+#: .\store\templates\store\catalog.html:197
+msgid "Ничего не найдено"
+msgstr "Nothing found"
+
+#: .\store\templates\store\catalog.html:198
+msgid "Сбросить фильтры"
+msgstr "Reset filters"
+
+#: .\store\templates\store\includes\product_card_mini.html:14
+#: .\store\templates\store\product_detail.html:190
+msgid "В корзину"
+msgstr "Add to cart"
+
+#: .\store\templates\store\includes\product_card_mini.html:28
+#: .\store\templates\store\product_detail.html:195
+msgid "Детали"
+msgstr "Details"
+
+#: .\store\templates\store\product_detail.html:93 .\templates\base_home.html:3
+#: .\templates\includes\navbar.html:105
+msgid "Главная"
+msgstr "Home"
+
+#: .\store\templates\store\product_detail.html:107
+msgid "Изображение отсутствует"
+msgstr "No image available"
+
+#: .\store\templates\store\product_detail.html:127
+msgid "Описание"
+msgstr "Description"
+
+#: .\store\templates\store\product_detail.html:137
+msgid "Выберите размер"
+msgstr "Select size"
+
+#: .\store\templates\store\product_detail.html:154
+msgid "Добавить в корзину"
+msgstr "Add to cart"
+
+#: .\store\templates\store\product_detail.html:160
+msgid "Войдите"
+msgstr "Login"
+
+#: .\store\templates\store\product_detail.html:160
+msgid "чтобы купить этот товар."
+msgstr "to buy this item."
+
+#: .\store\templates\store\product_detail.html:167
+msgid "Быстрая доставка по Казахстану"
+msgstr "Fast delivery across Kazakhstan"
+
+#: .\store\templates\store\product_detail.html:168
+#, python-format
+msgid "100%% Оригинальный товар"
+msgstr "100%% Original product"
+
+#: .\store\templates\store\product_detail.html:175
+msgid "Вы недавно смотрели"
+msgstr "Recently viewed"
+
+#: .\templates\base.html:7
+msgid "Главная | D-Stroy"
+msgstr "Home | D-Stroy"
+
+#: .\templates\base.html:26
+msgid "Close"
+msgstr "Close"
+
+#: .\templates\base_home.html:93
+msgid "Новая коллекция 2025"
+msgstr "New Collection 2025"
+
+#: .\templates\base_home.html:94
+msgid "Создана для твоих новых рекордов."
+msgstr "Created for your new records."
+
+#: .\templates\base_home.html:95
+msgid "Смотреть каталог"
+msgstr "View Catalog"
+
+#: .\templates\base_home.html:103
+#, python-format
+msgid "СКИДКИ ДО -50%%"
+msgstr "DISCOUNTS UP TO -50%%"
+
+#: .\templates\base_home.html:104
+msgid "На всю мужскую спортивную одежду."
+msgstr "On all men's sportswear."
+
+#: .\templates\base_home.html:105
+msgid "Купить выгодно"
+msgstr "Shop Now"
+
+#: .\templates\base_home.html:112
+msgid "АКСЕССУАРЫ"
+msgstr "ACCESSORIES"
+
+#: .\templates\base_home.html:113
+msgid "Всё необходимое для твоих тренировок."
+msgstr "Everything you need for your workouts."
+
+#: .\templates\base_home.html:114
+msgid "Выбрать"
+msgstr "Choose"
+
+#: .\templates\base_home.html:133
+msgid "Быстрая доставка"
+msgstr "Fast Delivery"
+
+#: .\templates\base_home.html:134
+msgid ""
+"Бесплатная доставка по Атырау при заказе от 15 000 ₸. Отправка по всему "
+"Казахстану."
+msgstr ""
+"Free delivery in Atyrau on orders over 15,000 ₸. Shipping throughout "
+"Kazakhstan."
+
+#: .\templates\base_home.html:142
+#, python-format
+msgid "100%% Оригинальный товар"
+msgstr "100%% Original"
+
+#: .\templates\base_home.html:143
+msgid ""
+"Мы гарантируем оригинальность всех товаров Nike, Adidas и Puma. Гарантия "
+"возврата."
+msgstr ""
+"We guarantee the originality of all Nike, Adidas and Puma products. Return "
+"guarantee."
+
+#: .\templates\base_home.html:151
+msgid "Онлайн-поддержка"
+msgstr "Online Support"
+
+#: .\templates\base_home.html:152
+msgid ""
+"Наши менеджеры всегда на связи. Нажмите сюда или на иконку в углу, чтобы "
+"начать чат."
+msgstr ""
+"Our managers are always available. Click here or the icon in the corner to "
+"start a chat."
+
+#: .\templates\includes\navbar.html:138
+msgid "Выход"
+msgstr "Logout"
+
+#: .\templates\includes\navbar.html:144
+#: .\users\templates\users\profile.html:164
+msgid "Вход"
+msgstr "Login"
+
+#: .\templates\includes\navbar.html:148
+msgid "Регистрация"
+msgstr "Sign up"
+
+#: .\templates\includes\session_info.html:5
+#, python-format
+msgid ""
+"\n"
+"            Вы заходили на сайт 1 раз.\n"
+"        "
+msgid_plural ""
+"\n"
+"            Вы заходили на сайт %(count)s раз.\n"
+"        "
+msgstr[0] "You have visited the site 1 time."
+msgstr[1] "You have visited the site %(count)s times."
+
+#: .\templates\includes\session_info.html:12
+msgid "Последняя страница"
+msgstr "Last page"
+
+#: .\templates\includes\session_info.html:16
+msgid "Текущий язык"
+msgstr "Current language"
+
+#: .\users\templates\users\password_change_form.html:4
+#: .\users\templates\users\password_change_form.html:12
+msgid "Смена пароля"
+msgstr "Change password"
+
+#: .\users\templates\users\password_change_form.html:31
+#: .\users\templates\users\profile.html:215
+msgid "Сменить пароль"
+msgstr "Change password"
+
+#: .\users\templates\users\password_change_form.html:32
+msgid "Отмена"
+msgstr "Cancel"
+
+#: .\users\templates\users\profile.html:5
+msgid "Личный кабинет"
+msgstr "Personal Account"
+
+#: .\users\templates\users\profile.html:97
+msgid "Редактировать профиль"
+msgstr "Edit Profile"
+
+#: .\users\templates\users\profile.html:106
+msgid "Ваши бонусы"
+msgstr "Your Bonuses"
+
+#: .\users\templates\users\profile.html:114
+msgid "Мои разделы"
+msgstr "My Sections"
+
+#: .\users\templates\users\profile.html:122
+msgid "товаров"
+msgstr "items"
+
+#: .\users\templates\users\profile.html:131
+msgid "Доставки"
+msgstr "Deliveries"
+
+#: .\users\templates\users\profile.html:132
+msgid "Нет активных заказов"
+msgstr "No active orders"
+
+#: .\users\templates\users\profile.html:141
+msgid "Избранное"
+msgstr "Favorites"
+
+#: .\users\templates\users\profile.html:142
+msgid "Список пуст"
+msgstr "List is empty"
+
+#: .\users\templates\users\profile.html:151
+#: .\users\templates\users\profile.html:226
+msgid "Настройки сайта"
+msgstr "Site Settings"
+
+#: .\users\templates\users\profile.html:152
+msgid "Тема и язык"
+msgstr "Theme and Language"
+
+#: .\users\templates\users\profile.html:161
+msgid "Безопасность"
+msgstr "Security"
+
+#: .\users\templates\users\profile.html:162
+msgid "Активная сессия"
+msgstr "Active Session"
+
+#: .\users\templates\users\profile.html:166
+msgid "Нет данных"
+msgstr "No data"
+
+#: .\users\templates\users\profile.html:176
+msgid "Выйти"
+msgstr "Logout"
+
+#: .\users\templates\users\profile.html:177
+msgid "Завершить сеанс"
+msgstr "End session"
+
+#: .\users\templates\users\profile.html:190
+msgid "Редактирование профиля"
+msgstr "Edit Profile"
+
+#: .\users\templates\users\profile.html:204
+msgid "Нажмите на фото"
+msgstr "Click on photo"
+
+#: .\users\templates\users\profile.html:207
+msgid "Имя"
+msgstr "First Name"
+
+#: .\users\templates\users\profile.html:208
+msgid "Фамилия"
+msgstr "Last Name"
+
+#: .\users\templates\users\profile.html:212
+msgid "Сохранить"
+msgstr "Save"
+
+#: .\users\templates\users\profile.html:232
+msgid "Цветовая тема"
+msgstr "Color Theme"
+
+#: .\users\templates\users\profile.html:233
+msgid "Язык интерфейса"
+msgstr "Interface Language"
+
+#: .\users\templates\users\profile.html:235
+msgid "Применить"
+msgstr "Apply"
+
+#: .\users\views.py:33
+msgid "Аккаунт успешно создан! Теперь войдите."
+msgstr "Account successfully created! Now log in."
+
+#: .\users\views.py:36
+msgid "Ошибка при регистрации. Проверьте введенные данные."
+msgstr "Error during registration. Check the entered data."
+
+#: .\users\views.py:60
+msgid "Код подтверждения для входа в D-Stroy"
+msgstr "Confirmation code for logging into D-Stroy"
+
+#: .\users\views.py:71
+msgid ""
+"Код подтверждения отправлен на вашу почту. Введите его для завершения входа."
+msgstr ""
+"A confirmation code has been sent to your email. Enter it to complete login."
+
+#: .\users\views.py:80
+msgid "Неверный логин или пароль."
+msgstr "Invalid username or password."
+
+#: .\users\views.py:86
+msgid "Ошибка сессии. Войдите снова."
+msgstr "Session error. Log in again."
+
+#: .\users\views.py:93
+msgid "Срок действия кода истек (2 минуты). Войдите снова."
+msgstr "The code has expired (2 minutes). Log in again."
+
+#: .\users\views.py:129
+msgid "Вход успешен! Добро пожаловать."
+msgstr "Login successful! Welcome."
+
+#: .\users\views.py:132
+msgid "Введен неверный код. Попробуйте снова."
+msgstr "Invalid code entered. Try again."
+
+#: .\users\views.py:134
+msgid "Ошибка в форме. Код должен быть 6 цифр."
+msgstr "Form error. The code must be 6 digits."
+
+#: .\users\views.py:161
+msgid "Основная информация успешно обновлена!"
+msgstr "Basic information updated successfully!"
+
+#: .\users\views.py:164
+msgid "Ошибка при обновлении основной информации."
+msgstr "Error updating basic information."
+
+#: .\users\views.py:182
+msgid "Настройки профиля успешно обновлены!"
+msgstr "Profile settings successfully updated!"
+
+#: .\users\views.py:185
+msgid "Ошибка при обновлении настроек."
+msgstr "Error updating settings."
+
+#: .\users\views.py:210
+msgid "Вы успешно вышли из системы. До свидания!"
+msgstr "You have successfully logged out. Goodbye!"
+
+#: .\users\views.py:229
+msgid "Язык сохранен в вашем профиле."
+msgstr "Language saved to your profile."

@@ -1,0 +1,19 @@
+{% load i18n %}
+
+{% if request.user.is_authenticated %}
+    <div class="alert alert-light p-2 small border" role="alert">
+        {% blocktrans count count=request.session.visit_count|default:0 %}
+            Вы заходили на сайт 1 раз.
+        {% plural %}
+            Вы заходили на сайт {{ count }} раз.
+        {% endblocktrans %}
+
+        {% if request.session.last_page %}
+            | {% translate "Последняя страница" %}: <code>{{ request.session.last_page }}</code>
+        {% endif %}
+
+        {% if request.current_language %}
+            | {% translate "Текущий язык" %}: **{{ request.current_language|upper }}**
+        {% endif %}
+    </div>
+{% endif %}

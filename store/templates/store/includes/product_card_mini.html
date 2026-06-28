@@ -1,0 +1,50 @@
+{% load i18n %}
+
+<style>
+    .product-card { border: none; background: transparent; transition: transform 0.3s; margin-bottom: 20px; }
+    .product-card:hover { transform: translateY(-5px); }
+    .img-container { position: relative; border-radius: 12px; overflow: hidden; background-color: #f8f9fa; aspect-ratio: 1 / 1; margin-bottom: 12px; border: 1px solid var(--bs-border-color); }
+    .product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .product-card:hover .product-img { transform: scale(1.05); }
+    
+    .price-tag { font-weight: 800; font-size: 1.1rem; color: var(--bs-body-color); }
+    .product-name { font-weight: 600; font-size: 1rem; color: var(--bs-secondary-color); text-decoration: none; display: block; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .product-name:hover { color: #fd7e14; }
+    
+    .buy-btn-overlay { position: absolute; bottom: 10px; right: 10px; background: white; color: #fd7e14; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15); opacity: 0.9; transition: 0.2s; }
+    .buy-btn-overlay:hover { background: #fd7e14; color: white; transform: scale(1.1); }
+    
+    .btn-detail-custom { border-color: #fd7e14; color: #fd7e14; font-weight: 600; }
+    .btn-detail-custom:hover { background-color: #fd7e14; color: white; }
+</style>
+
+<div class="product-card">
+    <div class="img-container">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" class="product-img" alt="{{ product.name }}">
+        {% else %}
+            <div class="d-flex align-items-center justify-content-center h-100 text-muted bg-light">
+                <i class="bi bi-image fs-1"></i>
+            </div>
+        {% endif %}
+        
+        {% if user.is_authenticated %}
+        <a href="{% url 'store:cart_add' product.id %}" class="buy-btn-overlay" title="{% trans 'В корзину' %}">
+            <i class="bi bi-cart-plus-fill"></i>
+        </a>
+        {% endif %}
+    </div>
+    
+    <div class="text-start">
+        <a href="{{ product.get_absolute_url }}" class="product-name" title="{{ product.name }}">
+            {{ product.name }}
+        </a>
+        <div class="price-tag">{{ product.price }} ₸</div>
+        
+        <div class="d-flex gap-2 mt-2">
+            <a href="{{ product.get_absolute_url }}" class="btn btn-sm btn-detail-custom flex-grow-1" style="font-size: 0.8rem;">
+                <i class="bi bi-info-circle"></i> Подробнее
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,113 @@
+/* static/css/style.css */
+
+
+
+/* Убеждаемся, что тело страницы занимает всю высоту для прилипающего футера */
+
+html, body {
+
+    height: 100%;
+
+}
+
+
+
+/* Стили для формы логина/регистрации, чтобы они выглядели чище */
+
+.form-control, .form-select {
+
+    box-shadow: none !important;
+
+}
+
+
+
+/* --- Стили для ТЁМНОЙ темы --- */
+
+[data-bs-theme="dark"] body {
+
+    background-color: #121212; /* Чуть темнее для фона */
+
+    color: #e0e0e0;
+
+}
+
+
+
+/* Общий стиль для карточек в тёмной теме */
+
+[data-bs-theme="dark"] .card {
+
+    background-color: #1a1a1a; /* Тёмный фон для карточек */
+
+    border-color: #333; /* Более тёмная граница */
+
+    color: #e0e0e0; /* Светлый текст */
+
+}
+
+
+
+/* Специально для фона bg-light, который используется в итогах */
+
+[data-bs-theme="dark"] .bg-light {
+
+    background-color: #1a1a1a !important; /* Устанавливаем тёмный фон для bg-light */
+
+    color: #e0e0e0 !important; /* Светлый текст */
+
+}
+
+
+
+/* Специально для group-list-item, который используется в корзине */
+
+[data-bs-theme="dark"] .list-group-item {
+
+    background-color: #212121; /* Тёмный фон для элементов списка */
+
+    border-color: #333;
+
+    color: #e0e0e0;
+
+}
+
+
+
+/* Стили для кнопок в тёмной теме, если нужно (пока не требуется, т.к. outline) */
+
+[data-bs-theme="dark"] .btn-light {
+
+    background-color: #333 !important;
+
+    color: #e0e0e0 !important;
+
+    border-color: #444 !important;
+
+}
+
+
+
+/* Стили для футера */
+
+.footer {
+
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+}
+
+[data-bs-theme="dark"] .footer {
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+}
+
+
+
+/* Делаем уведомления более заметными */
+
+.alert {
+
+    font-weight: 500;
+
+} 
