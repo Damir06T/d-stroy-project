@@ -6,6 +6,8 @@ from django.views.generic import TemplateView
 from django.conf import settings 
 from django.conf.urls.static import static 
 from django.conf.urls.i18n import i18n_patterns 
+from django.views.static import serve # Добавь этот импорт
+from django.urls import re_path       # И этот
 
 # Импорты для хака создания админа
 from django.contrib.auth.models import User
@@ -68,6 +70,9 @@ urlpatterns += i18n_patterns(
 
 
 # Блок для отдачи медиа-файлов локально (в режиме DEBUG=True)
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# Замени блок if settings.DEBUG на этот код
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {
+        'document_root': settings.MEDIA_ROOT,
+    }),
+]
