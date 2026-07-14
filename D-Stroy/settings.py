@@ -11,7 +11,7 @@ SECRET_KEY = 'django-insecure-z*5-1p*s_2t6_53i66@6p_6*b53d(i51m7c66(6g6)51^d'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Регистрация приложений
