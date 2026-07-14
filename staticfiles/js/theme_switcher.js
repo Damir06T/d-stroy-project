@@ -61,3 +61,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Вызов функции при загрузке
     applyInitialTheme();
 });
+

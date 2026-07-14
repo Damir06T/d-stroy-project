@@ -12,7 +12,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import AllowAny 
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .models import Product, Category, Cart, CartItem
+from .models import Product, Category, Cart, CartItem, Order, OrderItem
 from .serializers import ProductSerializer
 
 # --- Вспомогательная функция ---
@@ -98,13 +98,13 @@ def product_detail(request, slug):
     })
 
 
-# --- 3. Добавить в корзину (С УЧЕТОМ УМНОГО КАЛЬКУЛЯТОРА) ---
+# --- 3. Добавить в корзину (С УЧЕТОМ УМНОГО КАЛЬКУЛЯТОРА И AJAX) ---
 @login_required
 def cart_add(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart = get_or_create_cart(request.user)
     
-    # Читаем количество, которое передал пользователь или Умный калькулятор
+    # Читаем количество
     if request.method == 'POST':
         try:
             quantity = int(request.POST.get('quantity', 1))
@@ -114,25 +114,28 @@ def cart_add(request, product_id):
         quantity = 1
     
     # Создаем или находим запись в корзине
-    item, created = CartItem.objects.get_or_create(
-        cart=cart, 
-        product=product
-    )
+    item, created = CartItem.objects.get_or_create(cart=cart, product=product)
     
     if not created:
         item.quantity += quantity
-        item.save()
-        messages.success(request, f'Количество "{product.name}" увеличено на {quantity} упак.')
     else:
         item.quantity = quantity
-        item.save()
-        messages.success(request, f'"{product.name}" ({quantity} упак.) добавлен в корзину.')
+    item.save()
+
+    # Если запрос пришел фоном (через AJAX) - отдаем JSON без перезагрузки
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'quantity': item.quantity,
+            'item_total': str(item.get_total_price()),
+            'cart_total': str(cart.get_total_price()),
+            'total_items': sum(i.quantity for i in cart.items.all())
+        })
         
-    # Возвращаем пользователя туда, откуда он нажал кнопку
+    messages.success(request, f'Количество "{product.name}" обновлено.')
     return redirect(request.META.get('HTTP_REFERER', 'store:catalog'))
 
 
-# --- 4. Удалить из корзины ---
+# --- 4. Удалить из корзины (С УЧЕТОМ AJAX) ---
 @login_required
 def cart_remove(request, product_id):
     cart = get_or_create_cart(request.user)
@@ -145,13 +148,28 @@ def cart_remove(request, product_id):
         if item.quantity > 1:
             item.quantity -= 1
             item.save()
-            messages.info(request, f'Количество уменьшено.')
+            qty = item.quantity
+            item_tot = item.get_total_price()
+            removed = False
         else:
             item.delete()
-            messages.warning(request, f'Товар удален из корзины.')
+            qty = 0
+            item_tot = 0
+            removed = True
+
+        # Если запрос фоновый
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                'quantity': qty,
+                'item_total': str(item_tot),
+                'cart_total': str(cart.get_total_price()),
+                'total_items': sum(i.quantity for i in cart.items.all()),
+                'removed': removed
+            })
+            
+        messages.info(request, f'Корзина обновлена.')
             
     return redirect(request.META.get('HTTP_REFERER', 'store:cart_detail'))
-
 
 # --- 5. Просмотр корзины ---
 @login_required
@@ -171,8 +189,61 @@ def cart_detail(request):
 def checkout(request):
     cart = get_or_create_cart(request.user)
     if cart.items.count() == 0:
+        messages.warning(request, "Ваша корзина пуста.")
         return redirect('store:catalog')
-    return render(request, 'store/checkout.html', {'cart': cart, 'total_price': cart.get_total_price()})
+
+    total_price = cart.get_total_price()
+
+    if request.method == 'POST':
+        # Получаем данные из формы
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        phone = request.POST.get('phone')
+        address = request.POST.get('address')
+        payment_method = request.POST.get('payment_method')
+
+        # Создаем заказ в БД
+        order = Order.objects.create(
+            user=request.user,
+            first_name=first_name,
+            last_name=last_name,
+            phone=phone,
+            address=address,
+            payment_method=payment_method,
+            total_amount=total_price
+        )
+
+        # Переносим товары из корзины в заказ (чтобы зафиксировать цены)
+        for item in cart.items.all():
+            OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                product_name=item.product.name,
+                price=item.product.price,
+                quantity=item.quantity
+            )
+
+        # Очищаем корзину после успешного оформления
+        cart.items.all().delete()
+
+        # Перенаправляем на страницу успеха
+        return redirect('store:order_success', order_id=order.id)
+
+    return render(request, 'store/checkout.html', {'cart': cart, 'total_price': total_price})
+
+
+# --- 7. Успешное оформление заказа ---
+@login_required
+def order_success(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    
+    # Формируем текст для WhatsApp
+    whatsapp_text = f"Здравствуйте! Я хочу подтвердить заказ #{order.id} на сумму {order.total_amount} ₸. Мой адрес: {order.address}."
+    
+    return render(request, 'store/order_success.html', {
+        'order': order,
+        'whatsapp_text': whatsapp_text
+    })
 
 
 # --- 7. API ЖИВОГО ПОИСКА ---

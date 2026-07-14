@@ -35,6 +35,8 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True, null=True, verbose_name="Изображение")
+    image_2 = models.ImageField(upload_to='products/%Y/%m/%d', blank=True, null=True, verbose_name="Изображение 2")
+    image_3 = models.ImageField(upload_to='products/%Y/%m/%d', blank=True, null=True, verbose_name="Изображение 3")
 
     class Meta:
         ordering = ['name']
@@ -86,3 +88,40 @@ class CartItem(models.Model):
     def get_total_weight(self):
         """Новая функция: считает вес данной позиции"""
         return self.product.weight * self.quantity
+    
+    # --- НОВЫЕ МОДЕЛИ ДЛЯ ОФОРМЛЕНИЯ ЗАКАЗА ---
+class Order(models.Model):
+    PAYMENT_CHOICES = (
+        ('online', 'Оплата на сайте (Карта)'),
+        ('whatsapp', 'Оплата через WhatsApp / Менеджера'),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
+    first_name = models.CharField(max_length=50, verbose_name="Имя")
+    last_name = models.CharField(max_length=50, verbose_name="Фамилия")
+    phone = models.CharField(max_length=20, verbose_name="Телефон")
+    address = models.TextField(verbose_name="Адрес доставки")
+    payment_method = models.CharField(max_length=20, choices=PAYMENT_CHOICES, default='online', verbose_name="Способ оплаты")
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Сумма заказа")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    status = models.CharField(max_length=20, default='Ожидает обработки', verbose_name="Статус")
+
+    class Meta:
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Заказ #{self.id} от {self.user.username}"
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
+    product_name = models.CharField(max_length=200, verbose_name="Название товара")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена на момент покупки")
+    quantity = models.PositiveIntegerField(default=1, verbose_name="Количество")
+
+    def __str__(self):
+        return f"{self.product_name} x {self.quantity}"
+
+    def get_total_price(self):
+        return self.price * self.quantity

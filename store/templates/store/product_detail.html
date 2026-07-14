@@ -10,40 +10,51 @@
     .breadcrumb-item a { text-decoration: none; color: var(--bs-secondary-color); }
     .breadcrumb-item.active { color: #fd7e14; font-weight: 600; }
 
-    /* Фото */
-    .detail-img-wrapper {
-        background-color: white; border-radius: 15px; padding: 30px;
+    /* ГАЛЕРЕЯ */
+    .gallery-container { display: flex; flex-direction: column; gap: 15px; }
+    
+    .main-img-wrapper {
+        background-color: white; border-radius: 15px; padding: 20px;
         display: flex; align-items: center; justify-content: center;
         box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid var(--bs-border-color);
+        height: 400px; /* Фиксированная высота для ровности */
     }
-    .detail-img { max-width: 100%; max-height: 500px; object-fit: contain; transition: transform 0.3s; }
-    .detail-img:hover { transform: scale(1.02); }
+    .main-img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s; }
+    .main-img:hover { transform: scale(1.03); }
+
+    .thumbnail-row { display: flex; gap: 10px; justify-content: center; }
+    .thumbnail-item {
+        width: 80px; height: 80px; background-color: white; border-radius: 10px;
+        border: 2px solid transparent; cursor: pointer; padding: 5px;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.2s; border: 1px solid var(--bs-border-color);
+    }
+    .thumbnail-item img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .thumbnail-item:hover, .thumbnail-item.active { border-color: #fd7e14; box-shadow: 0 2px 10px rgba(253, 126, 20, 0.2); }
 
     /* Инфо */
     .product-info { padding-left: 20px; }
-    .product-title { font-weight: 800; font-size: 2.5rem; margin-bottom: 10px; text-transform: uppercase; line-height: 1.1; }
-    .product-category { font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; color: var(--bs-secondary-color); margin-bottom: 20px; display: block; font-weight: 600; }
+    .product-title { font-weight: 800; font-size: 2.2rem; margin-bottom: 5px; text-transform: uppercase; line-height: 1.2; }
+    .product-category { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--bs-secondary-color); margin-bottom: 15px; display: inline-block; font-weight: 600; background: var(--bs-tertiary-bg); padding: 5px 12px; border-radius: 20px;}
     
-    /* Цена и Бонусы */
-    .price-block { margin-bottom: 25px; }
-    .product-price { font-size: 2rem; font-weight: 700; color: #fd7e14; margin-bottom: 5px; }
+    /* Цена */
+    .price-block { margin-bottom: 20px; border-bottom: 1px solid var(--bs-border-color); padding-bottom: 15px;}
+    .product-price { font-size: 2.2rem; font-weight: 800; color: #fd7e14; margin-bottom: 0; line-height: 1;}
     
-    .product-description { font-size: 1.05rem; color: var(--bs-body-color); opacity: 0.9; line-height: 1.6; margin-bottom: 30px; }
-    .purchase-block { background-color: var(--bs-tertiary-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--bs-border-color); }
+    .product-description { font-size: 1rem; color: var(--bs-body-color); opacity: 0.9; line-height: 1.6; margin-bottom: 25px; }
+    .purchase-block { background-color: var(--bs-tertiary-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--bs-border-color); }
     
     .btn-add-cart { 
-        width: 100%; padding: 12px; font-size: 1.1rem; text-transform: uppercase; 
-        font-weight: 700; border-radius: 8px; background-color: #fd7e14; border-color: #fd7e14; color: white;
+        width: 100%; padding: 15px; font-size: 1.1rem; text-transform: uppercase; 
+        font-weight: 800; border-radius: 10px; background-color: #fd7e14; border-color: #fd7e14; color: white;
+        transition: all 0.3s;
     }
-    .btn-add-cart:hover { background-color: #e86e0c; }
+    .btn-add-cart:hover { background-color: #e86e0c; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(253, 126, 20, 0.3);}
     
     /* Стили Умного калькулятора */
     .smart-calculator {
-        background-color: rgba(253, 126, 20, 0.05);
-        border: 2px dashed #fd7e14;
-        border-radius: 10px;
-        padding: 15px;
-        margin-bottom: 20px;
+        background-color: rgba(253, 126, 20, 0.05); border: 2px dashed #fd7e14;
+        border-radius: 10px; padding: 15px; margin-bottom: 20px;
     }
 </style>
 
@@ -57,58 +68,77 @@
     </nav>
 
     <div class="row">
-        <div class="col-md-6 mb-4 mb-md-0">
-            <div class="detail-img-wrapper">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" class="detail-img" alt="{{ product.name }}">
-                {% else %}
-                    <div class="text-muted text-center">
-                        <i class="bi bi-camera" style="font-size: 5rem;"></i>
-                        <p>{% trans "Изображение отсутствует" %}</p>
-                    </div>
+        <div class="col-lg-5 col-md-6 mb-4 mb-md-0">
+            <div class="gallery-container">
+                <div class="main-img-wrapper">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" id="mainProductImage" class="main-img" alt="{{ product.name }}">
+                    {% else %}
+                        <div class="text-muted text-center">
+                            <i class="bi bi-camera" style="font-size: 5rem;"></i>
+                            <p>{% trans "Изображение отсутствует" %}</p>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                {% if product.image_2 or product.image_3 %}
+                <div class="thumbnail-row">
+                    {% if product.image %}
+                        <div class="thumbnail-item active" onclick="changeImage('{{ product.image.url }}', this)">
+                            <img src="{{ product.image.url }}" alt="Фото 1">
+                        </div>
+                    {% endif %}
+                    {% if product.image_2 %}
+                        <div class="thumbnail-item" onclick="changeImage('{{ product.image_2.url }}', this)">
+                            <img src="{{ product.image_2.url }}" alt="Фото 2">
+                        </div>
+                    {% endif %}
+                    {% if product.image_3 %}
+                        <div class="thumbnail-item" onclick="changeImage('{{ product.image_3.url }}', this)">
+                            <img src="{{ product.image_3.url }}" alt="Фото 3">
+                        </div>
+                    {% endif %}
+                </div>
                 {% endif %}
             </div>
         </div>
 
-        <div class="col-md-6 product-info">
+        <div class="col-lg-7 col-md-6 product-info">
             <span class="product-category">{{ product.category.name }}</span>
             <h1 class="product-title">{{ product.name }}</h1>
             
-            <div class="price-block">
-                <div class="product-price">{{ product.price }} ₸ / упак.</div>
-                <div class="text-muted small">Вес 1 упаковки: {{ product.weight }} кг</div>
+            <div class="price-block d-flex align-items-end gap-3">
+                <div class="product-price">{{ product.price }} ₸</div>
+                <div class="text-muted mb-1 fw-bold">/ упаковка</div>
+                <span class="badge bg-secondary ms-auto mb-2 p-2">Вес: {{ product.weight }} кг</span>
             </div>
 
             <div class="product-description">
-                <h5>{% trans "Описание" %}:</h5>
-                <p>{{ product.description|linebreaks }}</p>
+                <h6 class="fw-bold text-uppercase mb-2"><i class="bi bi-card-text me-2"></i>{% trans "Характеристики" %}:</h6>
+                <p class="mb-0">{{ product.description|linebreaksbr }}</p>
             </div>
 
-            <div class="purchase-block">
+            <div class="purchase-block shadow-sm">
                 
-                <!-- УМНЫЙ КАЛЬКУЛЯТОР D-STROY -->
                 {% if product.coverage_area > 0 %}
                 <div class="smart-calculator">
                     <h6 class="fw-bold text-uppercase mb-2" style="color: #fd7e14;">
-                        <i class="bi bi-calculator-fill me-1"></i> Умный строительный калькулятор
+                        <i class="bi bi-calculator-fill me-1"></i> Умный расчет материалов
                     </h6>
-                    <p class="small text-muted mb-3">Площадь покрытия 1 упаковки: <strong id="coverage">{{ product.coverage_area }}</strong> м²</p>
+                    <p class="small text-muted mb-2">Площадь покрытия 1 уп: <strong id="coverage">{{ product.coverage_area }}</strong> м²</p>
                     
                     <div class="row g-2 mb-2">
                         <div class="col-6">
-                            <label class="small fw-bold">Длина помещения (м)</label>
-                            <input type="number" id="calc-length" class="form-control form-control-sm" step="0.1" min="0" placeholder="Например: 5">
+                            <input type="number" id="calc-length" class="form-control form-control-sm" step="0.1" min="0" placeholder="Длина (м)">
                         </div>
                         <div class="col-6">
-                            <label class="small fw-bold">Ширина помещения (м)</label>
-                            <input type="number" id="calc-width" class="form-control form-control-sm" step="0.1" min="0" placeholder="Например: 3">
+                            <input type="number" id="calc-width" class="form-control form-control-sm" step="0.1" min="0" placeholder="Ширина (м)">
                         </div>
                     </div>
-                    <button type="button" class="btn btn-sm w-100 fw-bold" style="background-color: #212529; color: white;" onclick="calculateMaterials()">Рассчитать объем</button>
+                    <button type="button" class="btn btn-sm w-100 fw-bold" style="background-color: #212529; color: white;" onclick="calculateMaterials()">Рассчитать (с запасом 10%)</button>
                     
-                    <div id="calc-result" class="mt-3 text-center" style="display: none;">
-                        <span class="d-block small text-muted">Итоговая площадь (с запасом 10% на подрезку): <strong id="res-area">0</strong> м²</span>
-                        <span class="fs-5 fw-bold text-success d-block mt-1">Рекомендуем купить: <span id="res-packs">0</span> упак.</span>
+                    <div id="calc-result" class="mt-2 text-center" style="display: none; background: white; padding: 10px; border-radius: 8px;">
+                        <span class="fs-6 fw-bold text-success d-block">Рекомендуем: <span id="res-packs">0</span> упак.</span>
                     </div>
                 </div>
                 {% endif %}
@@ -116,59 +146,62 @@
                 <form action="{% url 'store:cart_add' product.id %}" method="post">
                     {% csrf_token %}
                     
-                    <!-- Поле количества товара -->
-                    <div class="mb-4 d-flex align-items-center gap-3">
-                        <label class="fw-bold text-uppercase small text-muted m-0">Количество (упак):</label>
-                        <input type="number" name="quantity" id="final-quantity" value="1" min="1" class="form-control fw-bold text-center" style="max-width: 100px; border: 2px solid var(--bs-border-color);">
+                    <div class="row align-items-center mb-3">
+                        <div class="col-auto">
+                            <label class="fw-bold text-uppercase small text-muted m-0">Количество:</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="number" name="quantity" id="final-quantity" value="1" min="1" class="form-control form-control-lg fw-bold text-center" style="max-width: 120px; border: 2px solid var(--bs-border-color);">
+                        </div>
                     </div>
 
                     {% if user.is_authenticated %}
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-add-cart shadow">
-                                <i class="bi bi-cart-plus-fill me-2"></i> В корзину
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-add-cart">
+                            <i class="bi bi-cart-plus-fill me-2"></i> В корзину
+                        </button>
                     {% else %}
                         <div class="alert alert-warning text-center m-0">
                             <i class="bi bi-info-circle-fill"></i> 
-                            <a href="{% url 'login' %}" class="alert-link">{% trans "Войдите" %}</a>, {% trans "чтобы купить этот товар." %}
+                            <a href="{% url 'login' %}" class="alert-link">{% trans "Войдите" %}</a>, чтобы оформить заказ.
                         </div>
                     {% endif %}
                 </form>
             </div>
             
-            <div class="mt-4 text-muted small">
-                <p><i class="bi bi-truck me-2" style="color: #fd7e14;"></i> Доставка спецтехникой по Атырау</p>
-                <p><i class="bi bi-shield-check me-2" style="color: #fd7e14;"></i> Прямые поставки с заводов-изготовителей</p>
+            <div class="d-flex gap-4 mt-4 text-muted small fw-bold">
+                <span><i class="bi bi-truck fs-5 me-2" style="color: #fd7e14; vertical-align: middle;"></i> Доставка по Атырау</span>
+                <span><i class="bi bi-shield-check fs-5 me-2" style="color: #fd7e14; vertical-align: middle;"></i> Гарантия качества</span>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Логика Умного Калькулятора -->
 <script>
+    // Скрипт для галереи
+    function changeImage(imageUrl, element) {
+        document.getElementById('mainProductImage').src = imageUrl;
+        // Убираем рамку у всех миниатюр
+        let thumbnails = document.querySelectorAll('.thumbnail-item');
+        thumbnails.forEach(thumb => thumb.classList.remove('active'));
+        // Добавляем рамку нажатой миниатюре
+        element.classList.add('active');
+    }
+
+    // Скрипт калькулятора
     function calculateMaterials() {
         const length = parseFloat(document.getElementById('calc-length').value) || 0;
         const width = parseFloat(document.getElementById('calc-width').value) || 0;
         const coverage = parseFloat(document.getElementById('coverage').innerText) || 1;
         
         if (length > 0 && width > 0) {
-            // Считаем площадь + 10% запаса
             const pureArea = length * width;
             const areaWithMargin = pureArea * 1.1; 
-            
-            // Считаем упаковки с округлением вверх
             const packsNeeded = Math.ceil(areaWithMargin / coverage);
             
-            // Выводим на экран
-            document.getElementById('res-area').innerText = areaWithMargin.toFixed(2);
             document.getElementById('res-packs').innerText = packsNeeded;
             document.getElementById('calc-result').style.display = 'block';
-            
-            // Автоматически подставляем в поле "Количество" перед кнопкой корзины
             document.getElementById('final-quantity').value = packsNeeded;
             
-            // Анимация привлечения внимания к кнопке
             const qtyInput = document.getElementById('final-quantity');
             qtyInput.style.borderColor = '#28a745';
             qtyInput.style.backgroundColor = '#d4edda';
@@ -177,7 +210,7 @@
                 qtyInput.style.backgroundColor = 'var(--bs-body-bg)';
             }, 1500);
         } else {
-            alert('Пожалуйста, введите корректные длину и ширину помещения!');
+            alert('Пожалуйста, введите корректные размеры!');
         }
     }
 </script>
