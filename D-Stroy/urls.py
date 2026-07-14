@@ -7,6 +7,10 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from django.conf.urls.i18n import i18n_patterns 
 
+# --- Импорты для хака создания админа ---
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
 # !!! ИМПОРТИРУЕМ НАШУ НОВУЮ ФУНКЦИЮ !!!
 from users.views import set_user_language
 
@@ -23,6 +27,13 @@ router = DefaultRouter()
 router.register(r'products', ProductViewSet) 
 # ===============================================
 
+# --- ХАК ДЛЯ СОЗДАНИЯ АДМИНА ---
+def create_admin(request):
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@example.com', 'admin12345')
+        return HttpResponse('Админ сәтті құрылды! Логин: admin, Пароль: admin12345')
+    return HttpResponse('Админ базада бар, қайта құрудың қажеті жоқ!')
+
 
 # URL-адреса, которые НЕ получают префикс языка (admin, DRF API и служебные)
 urlpatterns = [
@@ -30,6 +41,9 @@ urlpatterns = [
     path('i18n/setlang/', set_user_language, name='set_language'), 
     
     path('admin/', admin.site.urls),
+    
+    # !!! ССЫЛКА ДЛЯ СОЗДАНИЯ АДМИНА !!!
+    path('create-admin/', create_admin), 
 
     # !!! DRF API Маршруты !!! 
     path('api/', include(router.urls)), 
