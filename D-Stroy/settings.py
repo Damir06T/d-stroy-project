@@ -121,3 +121,7 @@ CHANNEL_LAYERS = {
     }
 }
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+# Это позволяет WhiteNoise обслуживать медиа-файлы
+if not DEBUG:
+    MIDDLEWARE.insert(2, 'whitenoise.middleware.WhiteNoiseMiddleware')
