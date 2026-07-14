@@ -7,11 +7,11 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from django.conf.urls.i18n import i18n_patterns 
 
-# --- Импорты для хака создания админа ---
+# Импорты для хака создания админа
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 
-# !!! ИМПОРТИРУЕМ НАШУ НОВУЮ ФУНКЦИЮ !!!
+# Импорт функции переключения языка
 from users.views import set_user_language
 
 # ===============================================
@@ -35,39 +35,39 @@ def create_admin(request):
     return HttpResponse('Админ базада бар, қайта құрудың қажеті жоқ!')
 
 
-# URL-адреса, которые НЕ получают префикс языка (admin, DRF API и служебные)
+# URL-адреса, которые НЕ получают префикс языка
 urlpatterns = [
-    # !!! ИСПРАВЛЕНИЕ: Перехватываем стандартный URL setlang нашей кастомной функцией !!!
+    # Исправление: Перехватываем стандартный URL setlang нашей кастомной функцией
     path('i18n/setlang/', set_user_language, name='set_language'), 
     
     path('admin/', admin.site.urls),
     
-    # !!! ССЫЛКА ДЛЯ СОЗДАНИЯ АДМИНА !!!
+    # Ссылка для создания админа
     path('create-admin/', create_admin), 
 
-    # !!! DRF API Маршруты !!! 
+    # DRF API Маршруты
     path('api/', include(router.urls)), 
     
-    # Подключаем стандартный API Login/Logout для browsable API и Postman
+    # Подключаем стандартный API Login/Logout
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')), 
 ]
 
 
-# !!! ОСНОВНЫЕ URL-адреса, обернутые в i18n_patterns !!!
+# Основные URL-адреса, обернутые в i18n_patterns
 urlpatterns += i18n_patterns(
     
     path('', TemplateView.as_view(template_name='base_home.html'), name='home'), 
     path('', include('users.urls')), 
     path('store/', include('store.urls')), 
     
-    # <--- НОВЫЙ МАРШРУТ ДЛЯ ЧАТА
+    # Маршрут для чата
     path('chat/', include('chat.urls')), 
     
     prefix_default_language=False
 )
 
 
-# Добавляем маршруты для медиа только в режиме разработки (DEBUG = True)
+# Блок для отдачи медиа-файлов локально (в режиме DEBUG=True)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

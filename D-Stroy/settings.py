@@ -17,14 +17,12 @@ CSRF_TRUSTED_ORIGINS = ['https://d-stroy-project.onrender.com']
 # Регистрация приложений
 INSTALLED_APPS = [
     'daphne',
-    'cloudinary_storage', # ВАЖНО: Должен быть ПЕРЕД django.contrib.staticfiles
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cloudinary', # Библиотека Cloudinary
     
     'modeltranslation',
     'store',
@@ -38,7 +36,7 @@ INSTALLED_APPS = [
 # MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Для статики
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Для статики[cite: 2]
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware', 
     'django.middleware.common.CommonMiddleware',
@@ -68,18 +66,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'D-Stroy.wsgi.application'
 
-# База данных для Render (PostgreSQL)
+# База данных для Render (PostgreSQL)[cite: 2]
 DATABASES = {
     'default': dj_database_url.config(default='sqlite:///db.sqlite3', conn_max_age=600)
 }
 
-# --- НАСТРОЙКИ CLOUDINARY ---
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-}
+# --- НАСТРОЙКИ МЕДИА (Локальное хранение) ---
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Статика
 STATIC_URL = '/static/'

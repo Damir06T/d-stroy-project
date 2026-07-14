@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from decimal import Decimal 
-from cloudinary.models import CloudinaryField  # Импортируем CloudinaryField
+# CloudinaryField удален[cite: 4]
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="Название")
@@ -36,10 +36,11 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     
-    # ИСПОЛЬЗУЕМ CLOUDINARY ДЛЯ КАРТИНОК
-    image = CloudinaryField(blank=True, null=True, verbose_name="Изображение")
-    image_2 = CloudinaryField(blank=True, null=True, verbose_name="Изображение 2")
-    image_3 = CloudinaryField(blank=True, null=True, verbose_name="Изображение 3")
+    # ИСПОЛЬЗУЕМ ImageField ДЛЯ ЛОКАЛЬНОГО ХРАНЕНИЯ[cite: 4]
+    image = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Изображение")
+    image_2 = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Изображение 2")
+    image_3 = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Изображение 3")
+    
     class Meta:
         ordering = ['name']
         
