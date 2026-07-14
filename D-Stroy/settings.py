@@ -2,43 +2,43 @@
 
 from pathlib import Path
 import os
-import dj_database_url  # Не забудь про этот пакет (есть в твоем requirements.txt)
+import dj_database_url
 from django.utils.translation import gettext_lazy as _ 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# --- БЕЗОПАСНОСТЬ (Берем из переменных окружения Render) ---
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-super-secret-key-change-me')
+# Используем переменные окружения для безопасности
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-z*5-1p*s_2t6_53i66@6p_6*b53d(i51m7c66(6g6)51^d')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Разрешаем доступ с локалхоста и любого адреса на Render
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'd-stroy-project.onrender.com']
 CSRF_TRUSTED_ORIGINS = ['https://d-stroy-project.onrender.com']
 
-# --- ПРИЛОЖЕНИЯ ---
+# Регистрация приложений
 INSTALLED_APPS = [
     'daphne',
+    'cloudinary_storage', # ВАЖНО: Должен быть ПЕРЕД django.contrib.staticfiles
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary', # Библиотека Cloudinary
     
     'modeltranslation',
     'store',
     'users',
     'rest_framework',
     'import_export',
-    
     'channels',
     'chat',
 ]
 
-# --- MIDDLEWARE (Добавлен WhiteNoise для статики) ---
+# MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # ВАЖНО: для работы статики на Render
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Для статики
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware', 
     'django.middleware.common.CommonMiddleware',
@@ -68,16 +68,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'D-Stroy.wsgi.application'
 
-# --- БАЗА ДАННЫХ (Подключение через переменную DATABASE_URL) ---
+# База данных для Render (PostgreSQL)
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': dj_database_url.config(default='sqlite:///db.sqlite3', conn_max_age=600)
 }
 
-# --- ЯЗЫК И ВРЕМЯ ---
+# --- НАСТРОЙКИ CLOUDINARY ---
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+# Статика
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Язык и время
 LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'Asia/Atyrau'
 USE_I18N = True
@@ -90,18 +100,13 @@ LANGUAGES = [
 ]
 LOCALE_PATHS = [BASE_DIR / 'locale']
 
-# --- СТАТИКА (Настройки для продакшена) ---
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
-# Важно для WhiteNoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Аутентификация
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
 
-# --- МЕДИА ---
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media' 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# --- НАСТРОЙКИ REST FRAMEWORK ---
+# REST FRAMEWORK
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 5, 
@@ -112,19 +117,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
-    'DEFAULT_FILTER_BACKENDS': [
-        'rest_framework.filters.SearchFilter',
-        'rest_framework.filters.OrderingFilter',
-    ]
 }
 
-# --- CHANNELS (ASGI) ---
+# ASGI
 ASGI_APPLICATION = 'D-Stroy.asgi.application'
-
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
-
 X_FRAME_OPTIONS = 'SAMEORIGIN'
